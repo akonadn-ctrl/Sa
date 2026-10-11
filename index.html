@@ -1,1 +1,532 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Soumia ❤️</title>
 
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #080205;
+  font-family: Arial, sans-serif;
+}
+
+.scene {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #080205;
+}
+
+.scene.active {
+  display: flex;
+  animation: sceneIn 1s ease both;
+}
+
+.scene-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: cinematicZoom 12s ease-in-out infinite alternate;
+}
+
+.scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,.15),
+    rgba(0,0,0,.08) 55%,
+    rgba(0,0,0,.48)
+  );
+  pointer-events: none;
+}
+
+.scene-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  padding: 24px;
+  text-align: center;
+  color: white;
+}
+
+.glow-text {
+  color: #ffe0a1;
+  text-shadow:
+    0 0 8px #ffb75e,
+    0 0 20px #ff253f,
+    0 0 40px #ff1838;
+}
+
+.start-button {
+  position: relative;
+  padding: 18px 28px;
+  border: 2px solid #ffb56a;
+  border-radius: 28px;
+  color: #fff2df;
+  background: rgba(100,0,15,.72);
+  font-size: clamp(28px, 6vw, 42px);
+  font-weight: bold;
+  box-shadow:
+    0 0 20px #ff173b,
+    inset 0 0 20px #ff293f77;
+  text-shadow: 0 0 15px #ff7c7c;
+  animation: buttonPulse 2s infinite;
+  cursor: pointer;
+}
+
+.start-heart {
+  display: block;
+  margin-top: 8px;
+  font-size: 48px;
+  animation: heartbeat 1s infinite;
+}
+
+.start-roses {
+  position: absolute;
+  z-index: 2;
+  bottom: 1%;
+  left: 0;
+  width: 100%;
+  font-size: clamp(32px, 7vw, 65px);
+  letter-spacing: -9px;
+  filter: drop-shadow(0 0 12px red);
+  animation: roseFloat 4s ease-in-out infinite;
+}
+
+.particles {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  bottom: -30px;
+  color: #ff3553;
+  text-shadow: 0 0 12px #ff173b;
+  animation: floatUp linear infinite;
+}
+
+.count-number {
+  direction: ltr;
+  font-size: clamp(130px, 30vw, 260px);
+  font-weight: 300;
+  color: #fff0d0;
+  text-shadow:
+    0 0 15px #ffb568,
+    0 0 35px #ff243e,
+    0 0 65px #ff243e;
+  animation: numberIn 1.2s ease both;
+}
+
+.scene-title {
+  font-size: clamp(30px, 7vw, 55px);
+  line-height: 1.6;
+  font-weight: bold;
+  text-shadow: 0 0 15px #ff173b, 0 0 30px #ffb56a;
+}
+
+.scene-message {
+  display: inline-block;
+  max-width: 900px;
+  padding: 18px 22px;
+  border-radius: 20px;
+  background: rgba(10,0,4,.42);
+  color: #fff1df;
+  font-size: clamp(23px, 5.3vw, 39px);
+  line-height: 1.9;
+  text-shadow: 0 0 12px #ffb76a;
+  animation: messageGlow 3s infinite alternate;
+}
+
+.love-heart {
+  direction: ltr;
+  font-size: clamp(22px, 5vw, 38px);
+  line-height: 1.6;
+  color: #ffe1a8;
+  text-shadow: 0 0 15px #ff243e, 0 0 35px #ff243e;
+  animation: heartbeat 1.5s infinite;
+}
+
+.cake-title {
+  font-size: clamp(26px, 6vw, 48px);
+  color: #ffe3a7;
+  text-shadow: 0 0 18px #ff243e;
+}
+
+.small-caption {
+  margin-top: 12px;
+  font-size: clamp(20px, 4.5vw, 30px);
+  color: #fff2e7;
+  text-shadow: 0 0 12px #ff334d;
+}
+
+.final-title {
+  font-size: clamp(32px, 7vw, 58px);
+  color: #ffdda0;
+  line-height: 1.8;
+  text-shadow:
+    0 0 10px #ffbb63,
+    0 0 25px #ff3b36,
+    0 0 50px #ff263d;
+  animation: finalGlow 2s infinite alternate;
+}
+
+.final-heart {
+  display: block;
+  font-size: 58px;
+  margin-top: 8px;
+  animation: heartbeat 1s infinite;
+}
+
+@keyframes sceneIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes cinematicZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.13); }
+}
+
+@keyframes buttonPulse {
+  0%,100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px #ff173b;
+  }
+  50% {
+    transform: scale(1.045);
+    box-shadow: 0 0 45px #ff173b;
+  }
+}
+
+@keyframes heartbeat {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes roseFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  15% { opacity: .9; }
+  100% {
+    transform: translateY(-115vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes numberIn {
+  0% { opacity: 0; transform: scale(.5); }
+  70% { opacity: 1; transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes messageGlow {
+  from { text-shadow: 0 0 8px #ffad61; }
+  to { text-shadow: 0 0 24px #ff3c4f, 0 0 35px #ffb76a; }
+}
+
+@keyframes finalGlow {
+  from { transform: scale(1); }
+  to { transform: scale(1.035); }
+}
+
+@media (max-width: 480px) {
+  .scene-content { padding: 16px; }
+  .scene-message { padding: 12px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- المشهد 1: البداية -->
+<section class="scene active" id="scene1">
+  <img class="scene-image" src="IMG_20261010_234234.png"
+       alt="" onerror="this.style.display='none'">
+
+  <div class="scene-content">
+    <button class="start-button" onclick="startBirthday()">
+      اضغطي هنا
+      <span class="start-heart">♥</span>
+    </button>
+  </div>
+
+  <div class="start-roses">🌹 🌹 🌹 🌹 🌹</div>
+</section>
+
+<!-- المشهد 2: العد التنازلي -->
+<section class="scene" id="scene2">
+  <img class="scene-image" src="IMG_20261010_234234.png" alt=""
+       onerror="this.style.display='none'">
+  <div class="particles" id="particles2"></div>
+  <div class="scene-content">
+    <div class="count-number" id="countNumber">3</div>
+  </div>
+</section>
+
+<!-- المشهد 3: الورود -->
+<section class="scene" id="scene3">
+  <img class="scene-image" src="IMG_20261010_234256.jpg" alt=""
+       onerror="this.style.display='none'">
+  <div class="particles" id="particles3"></div>
+</section>
+
+<!-- المشهد 4: قلب الحب -->
+<section class="scene" id="scene4">
+  <img class="scene-image" src="file_0000000069a0820aae929a4a71734128.png"
+       alt="" onerror="this.style.display='none'">
+  <div class="scene-content">
+    <div class="love-heart">
+      I LOVE YOU<br>
+      <span dir="rtl">سمية</span><br>
+      ♥
+    </div>
+  </div>
+</section>
+
+<!-- المشهد 5: الكعكة -->
+<section class="scene" id="scene5">
+  <img class="scene-image" src="IMG_20261010_234325.jpg" alt=""
+       onerror="this.style.display='none'">
+  <div class="scene-content">
+    <div class="cake-title">Happy Birthday</div>
+    <div class="scene-title">Soumia ♥</div>
+  </div>
+</section>
+
+<!-- المشهد 6: الرسالة -->
+<section class="scene" id="scene6">
+  <img class="scene-image" src="IMG_20261010_234340.jpg" alt=""
+       onerror="this.style.display='none'">
+  <div class="scene-content">
+    <div class="scene-message">
+      عيد ميلاد سعيد يا سمية،<br>
+      يا أجمل حب سكن قلبي،<br>
+      كنحبك ونتمنى تبقاي ليا<br>
+      فرحة العمر ونور أيامي. ❤️<br>
+      🎂 🌹
+    </div>
+  </div>
+</section>
+
+<!-- المشهد 7: إعلان الحب -->
+<section class="scene" id="scene7">
+  <img class="scene-image" src="IMG_20261010_234359.jpg" alt=""
+       onerror="this.style.display='none'">
+  <div class="scene-content">
+    <div class="scene-title glow-text">I LOVE YOU</div>
+    <div class="scene-title">سمية</div>
+    <div class="love-heart">♥</div>
+  </div>
+</section>
+
+<!-- المشهد 8: القمر والنجوم -->
+<section class="scene" id="scene8">
+  <div class="moon-sky"></div>
+  <div class="stars" id="stars"></div>
+  <div class="scene-content">
+    <div style="font-size:80px; animation: heartbeat 4s infinite;">🌕</div>
+    <div class="scene-message">
+      حتى في أبعد المسافات،<br>
+      يبقى لكِ مكان خاص في قلبي ❤️
+    </div>
+  </div>
+</section>
+
+<!-- المشهد 9: النهاية -->
+<section class="scene" id="scene9">
+  <img class="scene-image" src="IMG_20261010_234506.png" alt=""
+       onerror="this.style.display='none'">
+  <div class="particles" id="particles9"></div>
+  <div class="scene-content">
+    <div class="final-title">
+      كل عام وأنتِ بخير يا سمية
+      <span class="final-heart">♥</span>
+    </div>
+  </div>
+</section>
+
+<audio id="birthdayMusic" preload="auto" loop>
+  <source
+    src="TAGNE%20%C3%97%20MANAL%20-%20MAAK%20%28%20LYRICS%20-%20%D9%83%D9%84%D9%85%D8%A7%D8%AA%20%29.m4a"
+    type="audio/mp4">
+</audio>
+
+<script>
+const durations = {
+  scene2: 6000,
+  scene3: 5000,
+  scene4: 7000,
+  scene5: 7000,
+  scene6: 15000,
+  scene7: 5000,
+  scene8: 8000,
+  scene9: 11000
+};
+
+let showStarted = false;
+let countTimer = null;
+
+function showScene(id) {
+  document.querySelectorAll(".scene").forEach(scene => {
+    scene.classList.remove("active");
+  });
+
+  const target = document.getElementById(id);
+  if (target) target.classList.add("active");
+}
+
+function createParticles(containerId, symbol, amount) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  for (let i = 0; i < amount; i++) {
+    const item = document.createElement("span");
+    item.className = "particle";
+    item.textContent = symbol;
+    item.style.left = Math.random() * 100 + "%";
+    item.style.animationDuration = (4 + Math.random() * 7) + "s";
+    item.style.animationDelay = (Math.random() * 5) + "s";
+    item.style.fontSize = (12 + Math.random() * 23) + "px";
+    container.appendChild(item);
+  }
+}
+
+function runScene(id) {
+  showScene(id);
+
+  if (id === "scene2") {
+    runCountdown();
+    return;
+  }
+
+  if (id === "scene3") createParticles("particles3", "🌹", 22);
+  if (id === "scene9") createParticles("particles9", "✨", 55);
+
+  if (id === "scene9") {
+    // تبقى النهاية ظاهرة بعد انتهاء مدة المشهد.
+    return;
+  }
+
+  const duration = durations[id];
+  if (duration) {
+    setTimeout(() => {
+      const nextNumber = Number(id.replace("scene", "")) + 1;
+      runScene("scene" + nextNumber);
+    }, duration);
+  }
+}
+
+function runCountdown() {
+  const number = document.getElementById("countNumber");
+  const sequence = ["3", "2", "1"];
+  let index = 0;
+
+  function nextNumber() {
+    if (index >= sequence.length) {
+      runScene("scene3");
+      return;
+    }
+
+    number.textContent = sequence[index];
+    number.style.animation = "none";
+    void number.offsetWidth;
+    number.style.animation = "numberIn 1.2s ease both";
+    index++;
+    countTimer = setTimeout(nextNumber, 2000);
+  }
+
+  nextNumber();
+}
+
+function startBirthday() {
+  if (showStarted) return;
+  showStarted = true;
+
+  const music = document.getElementById("birthdayMusic");
+  music.volume = 0.8;
+
+  // يبدأ تشغيل الموسيقى مباشرة بعد ضغط المستخدم.
+  music.play().catch(() => {
+    alert("إذا لم تبدأ الموسيقى، اضغط على الشاشة مرة أخرى لتشغيلها.");
+  });
+
+  createParticles("particles2", "✦", 40);
+  runScene("scene2");
+}
+
+// نجوم متحركة للمشهد الثامن.
+(function createStars() {
+  const stars = document.getElementById("stars");
+  if (!stars) return;
+
+  for (let i = 0; i < 90; i++) {
+    const star = document.createElement("span");
+    star.textContent = "✦";
+    star.style.position = "absolute";
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 75 + "%";
+    star.style.color = "#fff2d0";
+    star.style.fontSize = (4 + Math.random() * 9) + "px";
+    star.style.opacity = Math.random();
+    star.style.animation = "messageGlow " +
+      (1 + Math.random() * 3) + "s infinite alternate";
+    stars.appendChild(star);
+  }
+})();
+</script>
+
+<style>
+.moon-sky {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 78% 20%, #fff0bd 0 34px,
+      #ffda8b 35px, transparent 54px),
+    linear-gradient(#061226, #101c32 65%, #020812);
+}
+
+.moon-sky::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 30%;
+  background:
+    linear-gradient(180deg, transparent, #06111c),
+    radial-gradient(ellipse at 70% 70%, #c28a4c44, transparent 45%);
+}
+</style>
+
+</body>
+  </html>
